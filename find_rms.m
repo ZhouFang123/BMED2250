@@ -6,6 +6,8 @@ function rms = find_rms(list)
     %           rms(2) = root mean square(list(101:350))
     %           rms(3) = root mean square(list(201:450))
     %           rms(4) = ......
-    % Test the function by runing rms_test.m
+    % Test the function using the following cases:
+    %   rms(sin(x)) = 1/sqrt(1)
+    %   rms(1 when (mod(x, 1) < 0.5), -1 when (mod(x,1) >= 0.5)) = 1
     rms = NaN;
 end
