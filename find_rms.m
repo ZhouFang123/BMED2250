@@ -6,5 +6,6 @@ function rms = find_rms(list)
     %           rms(2) = root mean square(list(101:350))
     %           rms(3) = root mean square(list(201:450))
     %           rms(4) = ......
+    % Test the function by runing rms_test.m
     rms = NaN;
 end
