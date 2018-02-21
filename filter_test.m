@@ -42,3 +42,4 @@ subplot(2, 1, 2);
 plot(x(1:10000), y(1:10000), 'b-');
 hold on
 plot(x(1:10000), low_y(1:10000), 'r-')
+hold off
