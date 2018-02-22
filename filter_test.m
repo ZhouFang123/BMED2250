@@ -3,7 +3,7 @@ close all
 clc
 
 low_cutoff = 5;
-high_cutoff = 5;
+high_cutoff = 60;
 filter_order = 5;
 measure_f = 250;
 load('slp32m.mat');
@@ -15,31 +15,30 @@ rec_y = abs(y2);
 low_y = filtfilt(b1, a1, rec_y);
 [b2, a2] = butter(filter_order, high_cutoff/measure_f, 'high');
 high_y = filtfilt(b2, a2, rec_y);
+% high_y(1000:4000) = high_y(1000:4000) .* 50;
 
-rms_high = zeros(1000000/100);
-rms_low = zeros(1000000/100);
-x1 = zeros(1000000/100);
-for i = 1:100:length(y)-250
-    % integrate high_y^2 over i to i+249
-    % find rms
-    % integrate low_y^2 over i to i+249
-    % find rms
-    % generate x-axix as i/100
-    ind = floor(i/100) + 1;
-    x(ind) = ind;
-    rms_high(ind) = sqrt(trapz(x(i:i+249), high_y(i:i+249).^2)./(x(i+249)-x(i)));
-    rms_low(ind) = sqrt(trapz(x(i:i+249), low_y(i:i+249).^2)./(x(i+249)-x(i)));
-end
-x1(1) = 0;
+rms_high = find_rms(high_y);
+rms_low = find_rms(low_y);
+x1 = 1:length(rms_low);
 
-subplot(2, 1, 1);
+subplot(2, 2, 1);
 plot(x(1:10000), high_y(1:10000), 'r-');
 hold on
 plot(x(1:10000), low_y(1:10000), 'b-');
 hold off
 
-subplot(2, 1, 2);
+subplot(2, 2, 2);
 plot(x(1:10000), y(1:10000), 'b-');
 hold on
 plot(x(1:10000), low_y(1:10000), 'r-')
 hold off
+
+subplot(2, 2, 3);
+plot(x1(1:70), rms_high(1:70), 'r-');
+hold on
+plot(x1(1:70), rms_low(1:70), 'b-');
+hold off
+
+ratio = rms_high./rms_low;
+subplot(2, 2, 4);
+plot(x1(1:70), ratio(1:70));

@@ -9,5 +9,13 @@ function rms = find_rms(list)
     % Test the function using the following cases:
     %   rms(sin(x)) = 1/sqrt(1)
     %   rms(1 when (mod(x, 1) < 0.5), -1 when (mod(x,1) >= 0.5)) = 1
-    rms = NaN;
+    xx = list;
+    rms = [];
+    while ~isempty(xx)
+       xxnew = xx(1:250);
+       rms_new = sqrt((1/250)*(sum(xxnew.^2)));
+       rms = [rms rms_new];
+       xx = xx(251:end);
+    end
 end
+
