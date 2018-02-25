@@ -15,7 +15,10 @@ function rms = find_rms(list)
        xxnew = xx(1:250);
        rms_new = sqrt((1/250)*(sum(xxnew.^2)));
        rms = [rms rms_new];
-       xx = xx(251:end);
+       xx = xx(126:end);
+       if length(xx) < 250
+            xx = [];
+       end
     end
 end
 
