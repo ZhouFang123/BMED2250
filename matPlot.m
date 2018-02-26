@@ -3,7 +3,7 @@ function matPlot(fname)
     high_cutoff = 60;
     filter_order = 5;
     measure_f = 250;
-    val = load(fname);
+    load(fname);
     y = val(7,:);
     x = linspace(0, 0.004*length(y), length(y));
     y2 = detrend(y);
@@ -12,7 +12,7 @@ function matPlot(fname)
     low_y = filtfilt(b1, a1, rec_y);
     [b2, a2] = butter(filter_order, high_cutoff/measure_f, 'high');
     high_y = filtfilt(b2, a2, rec_y);
-    % high_y(1000:4000) = high_y(1000:4000) .* 50;
+    % high_y(1000:6000) = high_y(1000:6000) .* 50;
 
     rms_high = find_rms(high_y);
     rms_low = find_rms(low_y);
@@ -31,7 +31,7 @@ function matPlot(fname)
     hold off
 
     subplot(2, 2, 3);
-    plot(x1(1:70), rms_high(1:70), 'r-');
+    plot(x1, rms_high, 'r-');
     hold on
     plot(x1, rms_low, 'b-');
     hold off
